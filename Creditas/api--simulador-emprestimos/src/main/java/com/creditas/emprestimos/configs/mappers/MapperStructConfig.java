@@ -1,4 +1,4 @@
-package com.creditas.emprestimos.configs;
+package com.creditas.emprestimos.configs.mappers;
 
 
 import org.mapstruct.InjectionStrategy;

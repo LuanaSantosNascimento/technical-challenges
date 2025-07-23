@@ -1,6 +1,6 @@
 package com.creditas.emprestimos.controller.mappers;
 
-import com.creditas.emprestimos.configs.MapperStructConfig;
+import com.creditas.emprestimos.configs.mappers.MapperStructConfig;
 import com.creditas.emprestimos.controller.data.input.SimulacaoEmprestimoRequest;
 import com.creditas.emprestimos.controller.data.output.SimulacaoEmprestimoResponse;
 import com.creditas.emprestimos.usecase.data.input.SimularEmprestimoBusinessInput;
