@@ -12,14 +12,14 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 class EmprestimoUseCaseImplTest {
 
@@ -49,7 +49,7 @@ class EmprestimoUseCaseImplTest {
 
         // Valores esperados
         BigDecimal taxaJurosAnualEsperada = BigDecimal.valueOf(0.05);
-        BigDecimal taxaJurosMensalEsperada = taxaJurosAnualEsperada.divide(BigDecimal.valueOf(12), 3, RoundingMode.HALF_EVEN);
+        BigDecimal taxaJurosMensalEsperada = BigDecimal.valueOf(0.004);
         BigDecimal pmtEsperado = new BigDecimal("854.70");
 
         assertEquals(taxaJurosAnualEsperada, output.getTaxaJurosAnual());
@@ -70,7 +70,7 @@ class EmprestimoUseCaseImplTest {
         assertNotNull(output);
         // Valores esperados
         BigDecimal taxaJurosAnualEsperada = BigDecimal.valueOf(0.03);
-        BigDecimal taxaJurosMensalEsperada = taxaJurosAnualEsperada.divide(BigDecimal.valueOf(12), 3, RoundingMode.HALF_EVEN);
+        BigDecimal taxaJurosMensalEsperada = BigDecimal.valueOf(0.002);
         BigDecimal pmtEsperado = new BigDecimal("190.51");
 
         assertEquals(taxaJurosAnualEsperada, output.getTaxaJurosAnual());
@@ -85,13 +85,18 @@ class EmprestimoUseCaseImplTest {
         input.setValorEmprestimo(BigDecimal.valueOf(8000));
         input.setPrazoMeses(36);
 
-        when(mapper.toSimulacaoEmprestimoBusinessOutput(any(), any(), any(), any(), any(), any()))
-                .thenReturn(new SimulacaoEmprestimoBusinessOutput());
-
         SimulacaoEmprestimoBusinessOutput output = useCase.simular(input);
 
         assertNotNull(output);
         verify(mapper).toSimulacaoEmprestimoBusinessOutput(eq(input), eq(BigDecimal.valueOf(0.02)), any(), any(), any(), any());
+        // Valores esperados
+        BigDecimal taxaJurosAnualEsperada = BigDecimal.valueOf(0.02);
+        BigDecimal taxaJurosMensalEsperada = BigDecimal.valueOf(0.002);
+        BigDecimal pmtEsperado = new BigDecimal("230.48");
+
+        assertEquals(taxaJurosAnualEsperada, output.getTaxaJurosAnual());
+        assertEquals(taxaJurosMensalEsperada, output.getTaxaJurosMensal());
+        assertEquals(pmtEsperado, output.getParcelaMensal());
     }
 
     @Test
@@ -105,6 +110,14 @@ class EmprestimoUseCaseImplTest {
 
         assertNotNull(output);
         verify(mapper).toSimulacaoEmprestimoBusinessOutput(eq(input), eq(BigDecimal.valueOf(0.04)), any(), any(), any(), any());
+        // Valores esperados
+        BigDecimal taxaJurosAnualEsperada = BigDecimal.valueOf(0.04);
+        BigDecimal taxaJurosMensalEsperada = BigDecimal.valueOf(0.003);
+        BigDecimal pmtEsperado = new BigDecimal("268.86");
+
+        assertEquals(taxaJurosAnualEsperada, output.getTaxaJurosAnual());
+        assertEquals(taxaJurosMensalEsperada, output.getTaxaJurosMensal());
+        assertEquals(pmtEsperado, output.getParcelaMensal());
     }
 
     @Test

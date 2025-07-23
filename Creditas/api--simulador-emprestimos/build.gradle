@@ -63,7 +63,7 @@ jacocoTestReport {
                         '**/configs/**',
                         '**/mappers/**',
                         '**/data/**',
-                        '**/ApiSimuladorCreditoApplication.java'
+                        '**/ApiSimuladorCreditoApplication.class'
                 ])
             }))
         }
