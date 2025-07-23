@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: api--simulador-credito
+  profiles:
+    active: local
+
+server:
+  port: 5000
+  servlet:
+    context-path: /${spring.application.name}
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
